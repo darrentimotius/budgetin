@@ -13,36 +13,36 @@ use Symfony\Component\Routing\Router;
 //     return view('pages.dashboard.ecommerce', ['title' => 'E-commerce Dashboard']);
 // })->name('dashboard');
 
-// // calender pages
-// Route::get('/calendar', function () {
-//     return view('pages.calender', ['title' => 'Calendar']);
-// })->name('calendar');
+// calender pages
+Route::get('/calendar', function () {
+    return view('pages.calender', ['title' => 'Calendar']);
+})->name('calendar');
 
-// // profile pages
-// Route::get('/profile', function () {
-//     return view('pages.profile', ['title' => 'Profile']);
-// })->name('profile');
+// profile pages
+Route::get('/profile', function () {
+    return view('pages.profile', ['title' => 'Profile']);
+})->name('profile');
 
-// // form pages
-// Route::get('/form-elements', function () {
-//     return view('pages.form.form-elements', ['title' => 'Form Elements']);
-// })->name('form-elements');
+// form pages
+Route::get('/form-elements', function () {
+    return view('pages.form.form-elements', ['title' => 'Form Elements']);
+})->name('form-elements');
 
-// // tables pages
-// Route::get('/basic-tables', function () {
-//     return view('pages.tables.basic-tables', ['title' => 'Basic Tables']);
-// })->name('basic-tables');
+// tables pages
+Route::get('/basic-tables', function () {
+    return view('pages.tables.basic-tables', ['title' => 'Basic Tables']);
+})->name('basic-tables');
 
-// // pages
+// pages
 
-// Route::get('/blank', function () {
-//     return view('pages.blank', ['title' => 'Blank']);
-// })->name('blank');
+Route::get('/blank', function () {
+    return view('pages.blank', ['title' => 'Blank']);
+})->name('blank');
 
-// // error pages
-// Route::get('/error-404', function () {
-//     return view('pages.errors.error-404', ['title' => 'Error 404']);
-// })->name('error-404');
+// error pages
+Route::get('/error-404', function () {
+    return view('pages.errors.error-404', ['title' => 'Error 404']);
+})->name('error-404');
 
 // // chart pages
 // Route::get('/line-chart', function () {
