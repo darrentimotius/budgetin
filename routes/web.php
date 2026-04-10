@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ResetPasswordController;
-use Symfony\Component\Routing\Router;
 
 // // dashboard pages
 // Route::get('/', function () {
@@ -34,7 +33,6 @@ Route::get('/basic-tables', function () {
 })->name('basic-tables');
 
 // pages
-
 Route::get('/blank', function () {
     return view('pages.blank', ['title' => 'Blank']);
 })->name('blank');
@@ -88,12 +86,22 @@ Route::get('/error-404', function () {
 // })->name('videos');
 
 // Landing Page
-Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
 
-// Authentication
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::get('/reset-password', [ResetPasswordController::class, 'index'])->name('reset-password');
+Route::middleware(['guest'])->group(function(){
+    Route::get('/', [LandingController::class, 'index'])->name('landing');
+
+    // Authentication
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+    Route::get('/reset-password', [ResetPasswordController::class, 'index'])->name('reset-password');
+});
 
 // Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth'])->group(function(){
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
