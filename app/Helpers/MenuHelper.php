@@ -10,40 +10,59 @@ class MenuHelper
             [
                 'icon' => 'dashboard',
                 'name' => 'Dashboard',
-                'path' => '/dashboard'
+                'route' => 'dashboard'
             ],
             [
                 'icon' => 'transaction',
                 'name' => 'Transactions',
-                'path' => '/transaction',
+                'subItems' => [
+                    ['name' => 'Income', 'route' => 'income', 'pro' => false],
+                    ['name' => 'Expense', 'route' => 'expense', 'pro' => false],
+                    ['name' => 'Transfer', 'route' => 'transfer', 'pro' => false]
+                ]
             ],
             [
                 'icon' => 'calendar',
-                'name' => 'Calendar',
-                'path' => '/calendar',
+                'name' => 'Category',
+                'route' => 'category',
             ],
             [
-                'name' => 'Forms',
-                'icon' => 'forms',
-                'subItems' => [
-                    ['name' => 'Form Elements', 'path' => '/form-elements', 'pro' => false],
-                ],
+                'icon' => 'charts',
+                'name' => 'Investment',
+                'route' => 'investment',
             ],
             [
-                'name' => 'Tables',
-                'icon' => 'tables',
-                'subItems' => [
-                    ['name' => 'Basic Tables', 'path' => '/basic-tables', 'pro' => false]
-                ],
-            ],
-            [
-                'name' => 'Pages',
-                'icon' => 'pages',
-                'subItems' => [
-                    ['name' => 'Blank Page', 'path' => '/blank', 'pro' => false],
-                    ['name' => '404 Error', 'path' => '/error-404', 'pro' => false]
-                ],
-            ],
+                'icon' => 'charts',
+                'name' => 'Report',
+                'route' => 'report',
+            ]
+            // [
+            //     'icon' => 'calendar',
+            //     'name' => 'Report',
+            //     'route' => 'report',
+            // ],
+            // [
+            //     'name' => 'Forms',
+            //     'icon' => 'forms',
+            //     'subItems' => [
+            //         ['name' => 'Form Elements', 'route' => 'form-elements', 'pro' => false],
+            //     ],
+            // ],
+            // [
+            //     'name' => 'Tables',
+            //     'icon' => 'tables',
+            //     'subItems' => [
+            //         ['name' => 'Basic Tables', 'route' => 'basic-tables', 'pro' => false]
+            //     ],
+            // ],
+            // [
+            //     'name' => 'Pages',
+            //     'icon' => 'pages',
+            //     'subItems' => [
+            //         ['name' => 'Blank Page', 'route' => 'blank', 'pro' => false],
+            //         ['name' => '404 Error', 'route' => 'error-404', 'pro' => false]
+            //     ],
+            // ],
         ];
     }
 
@@ -53,8 +72,13 @@ class MenuHelper
             [
                 'icon' => 'user-profile',
                 'name' => 'Profile',
-                'path' => '/profile',
+                'route' => 'profile',
             ],
+            [
+                'icon' => 'user-profile',
+                'name' => 'Settings',
+                'route' => 'settings'
+            ]
             // [
             //     'icon' => 'charts',
             //     'name' => 'Charts',
@@ -104,6 +128,19 @@ class MenuHelper
     public static function isActive($path)
     {
         return request()->is(ltrim($path, '/'));
+    }
+
+    public static function resolveMenuItemUrl(array $item): string
+    {
+        return route($item['route']);
+    }
+
+    public static function resolveMenuItemPath(array $item): string
+    {
+        $url = self::resolveMenuItemUrl($item);
+        $path = parse_url($url, PHP_URL_PATH);
+
+        return $path ?: '/';
     }
 
     public static function getIconSvg($iconName)
