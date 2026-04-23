@@ -183,7 +183,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-[linear-gradient(to_bottom,#D9E7F6_43%,#B5CFED_100%)] relative hidden h-full w-full items-center lg:grid lg:w-1/2 dark:bg-[linear-gradient(to_bottom,#1E293B,#0F172A)]">
+            <div class="bg-[linear-gradient(to_bottom,#E4EBF1_43%,#B5CFED_100%)] relative hidden h-full w-full items-center lg:grid lg:w-1/2 dark:bg-[linear-gradient(to_bottom,#1E293B,#0F172A)]">
                 <div class="z-1 flex items-center justify-center">
                     <div class="flex max-w-sm flex-col items-center">
                         <a href="/" class="mb-4 block">
