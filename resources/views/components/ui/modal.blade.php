@@ -11,6 +11,7 @@
                 document.body.style.overflow = 'hidden';
             } else {
                 document.body.style.overflow = 'unset';
+                this.$dispatch('modal-closed');
             }
         });
     }
@@ -19,18 +20,20 @@
     {{ $attributes->except('class') }}>
 
     <!-- Backdrop -->
-    <div @click="open = false" class="fixed inset-0 h-full w-full bg-gray-400/50 backdrop-blur-[32px]"
+    <div x-show="open" @click="open = false" class="fixed inset-0 h-full w-full bg-gray-400/50 backdrop-blur-[32px]"
         x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
     </div>
 
     <!-- Modal Content -->
-    <div @click.stop class="relative w-full rounded-3xl bg-white dark:bg-gray-900 {{ $attributes->get('class') }}"
-        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95"
-        x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100 transform scale-100"
-        x-transition:leave-end="opacity-0 transform scale-95">
+    <div x-show="open" @click.stop
+        class="relative w-full rounded-3xl bg-white dark:bg-gray-900 {{ $attributes->get('class') }}"
+        x-transition:enter="duration-300 [cubic-bezier(0.16,1,0.3,1)]"
+        x-transition:enter-start="opacity-0 -translate-y-12 scale-95"
+        x-transition:enter-end="opacity-100 translate-y-0 scale-100" x-transition:leave="duration-200 ease-in"
+        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+        x-transition:leave-end="opacity-0 -translate-y-6 scale-95">
 
         <!-- Close Button -->
         @if ($showCloseButton)

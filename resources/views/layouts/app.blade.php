@@ -134,5 +134,7 @@
 </body>
 
 @stack('scripts')
+@include('sweetalert::alert')
+
 
 </html>
