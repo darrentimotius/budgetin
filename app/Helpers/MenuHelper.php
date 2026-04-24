@@ -24,7 +24,7 @@ class MenuHelper
             [
                 'icon' => 'calendar',
                 'name' => 'Category',
-                'route' => 'category',
+                'route' => 'category.index',
             ],
             [
                 'icon' => 'charts',

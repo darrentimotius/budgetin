@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Transaction\CategoryController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -9,7 +10,6 @@ use App\Http\Controllers\Investment\InvesmentController;
 use App\Http\Controllers\Landing\LandingController;
 use App\Http\Controllers\User\ProfileControlller;
 use App\Http\Controllers\Report\ReportController;
-use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\User\SettingsController;
 use App\Http\Controllers\Transaction\ExpenseController;
 use App\Http\Controllers\Transaction\IncomeController;
@@ -112,7 +112,13 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/income', [IncomeController::class, 'index'])->name('income');
     Route::get('/expense', [ExpenseController::class, 'index'])->name('expense');
     Route::get('/transfer', [TransferController::class, 'index'])->name('transfer');
-    Route::get('/category', [CategoryController::class, 'index'])->name('category');
+    
+    Route::prefix('/category')->as('category.')->group(function(){
+        Route::get('/', [CategoryController::class, 'index'])->name('index');
+        Route::post('/create', [CategoryController::class, 'create'])->name('create');
+        Route::post('/update/{slug}', [CategoryController::class, 'update'])->name('update');
+        Route::delete('/delete/{slug}', [CategoryController::class, 'destroy'])->name('delete');
+    });
     
     // Investment
     Route::get('/investment', [InvesmentController::class, 'index'])->name('investment');
