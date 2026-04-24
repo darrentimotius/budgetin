@@ -80,7 +80,7 @@
     <!-- Profile Info Modal -->
     <x-ui.modal x-data="{ open: false }" @open-profile-info-modal.window="open = true" :isOpen="false" class="max-w-[700px]">
         <div
-            class="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
+            class="no-scrollbar relative w-full max-w-[700px] max-h-[80vh] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
             <div class="px-2 pr-14">
                 <h4 class="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
                     Edit Personal Information
@@ -90,7 +90,7 @@
                 </p>
             </div>
             <form class="flex flex-col">
-                <div class="custom-scrollbar h-[458px] overflow-y-auto p-2">
+                <div class="custom-scrollbar max-h-[40vh] lg:max-h-[60vh] overflow-y-auto p-2">
                     <div>
                         <h5 class="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
                             Social Links
