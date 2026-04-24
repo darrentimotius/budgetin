@@ -5,7 +5,7 @@
     'label' => null,
     'placeholder' => 'Select date',
     'name' => null,
-    'dateFormat' => 'Y-m-d',
+    'dateFormat' => 'd-m-Y',
 ])
 
 <div x-data="{
