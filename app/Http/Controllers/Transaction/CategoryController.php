@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class CategoryController extends Controller
 {
     public function index() {
-        $categories = Category::all();
+        $categories = Category::where('user_id', Auth::id())->get();
         confirmDelete('Are you sure you want to delete this category?');
         return view('pages.transaction.category', ['title' => 'Category'], compact('categories'));
     }
