@@ -109,10 +109,21 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Transaction
-    Route::get('/income', [IncomeController::class, 'index'])->name('income');
-    Route::get('/expense', [ExpenseController::class, 'index'])->name('expense');
-    Route::get('/transfer', [TransferController::class, 'index'])->name('transfer');
-    
+    Route::prefix('/income')->as('income.')->group(function(){
+        Route::get('/', [IncomeController::class, 'index'])->name('index');
+        /*
+        Adriel's work field
+        */
+    });
+
+    Route::prefix('/expense')->as('expense.')->group(function(){
+        Route::get('/', [ExpenseController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('/transfer')->as('transfer.')->group(function(){
+        Route::get('/', [TransferController::class, 'index'])->name('index');
+    });
+
     Route::prefix('/category')->as('category.')->group(function(){
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::post('/create', [CategoryController::class, 'create'])->name('create');
