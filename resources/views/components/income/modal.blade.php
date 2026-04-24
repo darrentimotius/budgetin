@@ -1,3 +1,31 @@
+<style>
+.flatpickr-calendar{
+    width: 310px !important;
+}
+/* Paksa 7 kolom selalu muat */
+.flatpickr-days {
+    width: 100% !important;
+}
+
+.dayContainer {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+}
+
+/* Kotak tanggal auto menyesuaikan */
+.flatpickr-day {
+    width: 100% !important;
+    height: 28px;
+    line-height: 28px;
+    font-size: 10px;
+    margin: 0 !important;
+}
+
+.flatpickr-rContainer {
+    width: 100% !important;
+}
+</style>
 <x-ui.modal @open-income-modal.window="open = true" :isOpen="false" class="max-w-[700px]">
     <div x-data="{
         mode: 'create',
@@ -24,7 +52,7 @@
             }
         },
     }" @open-income-modal.window="openModal($event.detail)"
-        class="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
+        class="no-scrollbar relative w-full max-w-[700px] overflow-hidden rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
         <div class="px-2 pr-14">
             <template x-if="mode === 'create'">
                 <div>
@@ -32,7 +60,7 @@
                         Add New Income
                     </h4>
                     <p class="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-                        ganti nanti
+                        Enter your income details to add a new record.
                     </p>
                 </div>
             </template>
@@ -40,17 +68,17 @@
             <template x-if="mode === 'edit'">
                 <div>
                     <h4 class="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-                        Edit income
+                        Edit Income
                     </h4>
                     <p class="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-                        ganti nanti
+                        Update your income details to keep your records accurate.
                     </p>
                 </div>
             </template>
         </div>
 
         <form class="flex flex-col">
-            <div class="custom-scrollbar flex flex-col gap-5 overflow-y-auto p-2">
+            <div class="custom-scrollbar flex flex-col gap-5 overflow-y-auto max-h-[60vh] p-2">
                 <div>
                     <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                         Income Title
