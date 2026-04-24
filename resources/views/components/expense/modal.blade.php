@@ -1,3 +1,10 @@
+<style>
+.flatpickr-calendar{
+    transform: scale(0.8) !important;
+    transform-origin: top left !important;
+}
+</style>
+
 <x-ui.modal @open-expense-modal.window="open = true" :isOpen="false" class="max-w-[700px]">
     <div x-data="{
         mode: 'create',

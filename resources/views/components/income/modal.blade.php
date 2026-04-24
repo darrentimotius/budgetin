@@ -1,31 +1,10 @@
 <style>
 .flatpickr-calendar{
-    width: 310px !important;
-}
-/* Paksa 7 kolom selalu muat */
-.flatpickr-days {
-    width: 100% !important;
-}
-
-.dayContainer {
-    display: grid !important;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 1px;
-}
-
-/* Kotak tanggal auto menyesuaikan */
-.flatpickr-day {
-    width: 100% !important;
-    height: 28px;
-    line-height: 28px;
-    font-size: 10px;
-    margin: 0 !important;
-}
-
-.flatpickr-rContainer {
-    width: 100% !important;
+    transform: scale(0.8) !important;
+    transform-origin: top left !important;
 }
 </style>
+
 <x-ui.modal @open-income-modal.window="open = true" :isOpen="false" class="max-w-[700px]">
     <div x-data="{
         mode: 'create',
