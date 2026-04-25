@@ -10,7 +10,7 @@
                 <x-transfer.table />
                 <x-transfer.pagination />
             </div>
-            <x-transfer.modal />
+            <x-transfer.modal :accounts="$accounts" />
         </div>
     </div>
 @endsection
@@ -23,13 +23,16 @@
                 itemsPerPage: 5,
                 currentPage: 1,
                 dropdownOpen: null,
+                search: '',
                 get totalPages() {
                     return this.totalEntries === 0 ? 1 : Math.ceil(this.totalEntries / this.itemsPerPage);
                 },
                 get paginatedtransfer() {
                     const start = (this.currentPage - 1) * this.itemsPerPage;
                     const end = start + this.itemsPerPage;
-                    return this.transfers.slice(start, end);
+                    const data = this.filteredTransfers;
+
+                    return data.slice(start, end);
                 },
                 get displayedPages() {
                     const range = [];
@@ -86,7 +89,7 @@
                     });
                 },
                 get totalEntries() {
-                    return this.transfers.length;
+                    return this.filteredTransfers.length;
                 },
                 get start() {
                     return this.totalEntries === 0 ? 0 : (this.currentPage - 1) * this.itemsPerPage + 1;
@@ -127,7 +130,24 @@
                             window.createIcons();
                         });
                     });
-                }
+
+                    this.$watch('search', () => {
+                        this.currentPage = 1;
+                    });
+                },
+                get filteredTransfers(){
+                    if(!this.search) return this.transfers;
+
+                    return this.transfers.filter(t => {
+                        return (
+                            (t.description ?? '').toLowerCase().includes(this.search.toLowerCase()) ||
+                            (t.from_account?.name ?? '').toLowerCase().includes(this.search.toLowerCase()) ||
+                            (t.to_account?.name ?? '').toLowerCase().includes(this.search.toLowerCase()) ||
+                            (t.amount ?? '').toString().includes(this.search) ||
+                            (t.date ?? '').includes(this.search)
+                        );
+                    });
+                },
             }
         }
     </script>
