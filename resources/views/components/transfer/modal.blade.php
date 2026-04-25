@@ -12,8 +12,8 @@
             id: null,
             date: '',
             amount: '',
-            from_account: '',
-            to_account: '',
+            from_account_id: '',
+            to_account_id: '',
             description: ''
         },
         openModal(detail) {
@@ -22,8 +22,8 @@
                 id: null,
                 date: '',
                 amount: '',
-                from_account: '',
-                to_account: '',
+                from_account_id: '',
+                to_account_id: '',
                 description: ''
             };
             if (this.transfer.amount) {
@@ -56,7 +56,14 @@
             </template>
         </div>
 
-        <form class="flex flex-col">
+        <form class="flex flex-col" method="POST"
+            :action="mode === 'create'
+                ?
+                '{{ route('transfer.store') }}' :
+                '/transfer/update/' + transfer.id"
+        >
+            @csrf 
+            @method('POST')
             <div class="custom-scrollbar flex flex-col gap-5 overflow-y-auto max-h-[60vh] p-2">
                 <div class="flex flex-row gap-10">
                     <div class="w-1/2">
@@ -65,21 +72,18 @@
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
                             <select
+                                name="from_account_id"
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
                                 @change="isOptionSelected = true">
                                 <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
                                     Select Option
                                 </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    BCA
-                                </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    BRI
-                                </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    BLU
-                                </option>
+                                @foreach ($accounts as $account)
+                                    <option value="{{ $account->id }}">
+                                        {{ $account->name }}
+                                    </option>
+                                @endforeach
                             </select>
                             <span
                                 class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
@@ -97,21 +101,18 @@
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
                             <select
+                                name="to_account_id"
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
                                 @change="isOptionSelected = true">
                                 <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
                                     Select Option
                                 </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    BCA
-                                </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    BRI
-                                </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    BLU
-                                </option>
+                                @foreach ($accounts as $account)
+                                    <option value="{{ $account->id }}">
+                                        {{ $account->name }}
+                                    </option>
+                                @endforeach
                             </select>
                             <span
                                 class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
@@ -136,6 +137,7 @@
                                 IDR
                             </span>
                             <input type="text" x-model="transfer.amount"
+                                name="amount"
                                 @input="transfer.amount = formatRupiah($event.target.value)" placeholder="0"
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pl-16 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
                         </div>
@@ -148,7 +150,7 @@
                         Date
                     </label>
                     <div class="relative w-full">
-                        <x-form.date-picker id="date_pick" name="date_pick" placeholder="Date Picker"
+                        <x-form.date-picker id="date_pick" name="date" placeholder="Date Picker"
                             x-model="transfer.date" defaultDate="{{ now()->format('d-m-Y') }}" />
                     </div>
                 </div>
@@ -157,7 +159,8 @@
                     <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                         Description
                     </label>
-                    <textarea x-model="transfer.description" placeholder="Enter a description..." type="text" rows="6"
+                    <textarea name="description"
+                        x-model="transfer.description" placeholder="Enter a description..." type="text" rows="6"
                         class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"></textarea>
                 </div>
 
@@ -166,7 +169,7 @@
                         class="flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] sm:w-auto">
                         Close
                     </button>
-                    <button @click="open = false" type="button"
+                    <button type="submit"
                         class="flex w-full justify-center rounded-lg bg-main px-4 py-2.5 text-sm font-medium text-white hover:bg-main-hover sm:w-auto">
                         <span x-text="mode === 'create' ? 'Save Changes' : 'Update Transfer'"></span>
                     </button>

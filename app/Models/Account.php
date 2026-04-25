@@ -4,18 +4,14 @@ namespace App\Models;
 
 use App\Models\Transaction;
 use App\Models\User;
-use App\Trait\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Account extends Model
 {
-    use HasSlug;
     protected $fillable = [
-        'icon',
+        'user_id',
         'name',
-        'slug',
-        'monthly_budget',
-        'user_id'
+        'balance',
     ];
 
     public function user(){
@@ -25,5 +21,4 @@ class Category extends Model
     public function transaction(){
         return $this->hasMany(Transaction::class);
     }
-
 }

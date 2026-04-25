@@ -60,7 +60,7 @@
         <form class="flex flex-col" method="POST"
             :action="mode === 'create'
                 ?
-                '{{ route('category.create') }}' :
+                '{{ route('category.store') }}' :
                 '/category/update/' + category.slug">
             @csrf
             @method('POST')

@@ -16,9 +16,9 @@ class MenuHelper
                 'icon' => 'transaction',
                 'name' => 'Transactions',
                 'subItems' => [
-                    ['name' => 'Income', 'route' => 'income', 'pro' => false],
-                    ['name' => 'Expense', 'route' => 'expense', 'pro' => false],
-                    ['name' => 'Transfer', 'route' => 'transfer', 'pro' => false]
+                    ['name' => 'Income', 'route' => 'income.index', 'pro' => false],
+                    ['name' => 'Expense', 'route' => 'expense.index', 'pro' => false],
+                    ['name' => 'Transfer', 'route' => 'transfer.index', 'pro' => false]
                 ]
             ],
             [

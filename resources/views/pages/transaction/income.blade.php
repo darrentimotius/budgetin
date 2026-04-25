@@ -23,13 +23,16 @@
                 itemsPerPage: 5,
                 currentPage: 1,
                 dropdownOpen: null,
+                search: '',
                 get totalPages() {
                     return this.totalEntries === 0 ? 1 : Math.ceil(this.totalEntries / this.itemsPerPage);
                 },
                 get paginatedincomes() {
                     const start = (this.currentPage - 1) * this.itemsPerPage;
                     const end = start + this.itemsPerPage;
-                    return this.incomes.slice(start, end);
+                    const data = this.filteredIncomes;
+
+                    return data.slice(start, end);
                 },
                 get displayedPages() {
                     const range = [];
@@ -127,7 +130,24 @@
                             window.createIcons();
                         });
                     });
-                }
+
+                    this.$watch('search', () => {
+                        this.currentPage = 1;
+                    });
+                },
+                get filteredIncomes(){
+                    if(!this.search) return this.transfers;
+
+                    return this.transfers.filter(t => {
+                        return (
+                            (t.description ?? '').toLowerCase().includes(this.search.toLowerCase()) ||
+                            (t.title ?? '').toLowerCase().includes(this.search.toLowerCase()) ||
+                            (t.account_bank?.name ?? '').toLowerCase().includes(this.search.toLowerCase()) ||
+                            (t.amount ?? '').toString().includes(this.search) ||
+                            (t.date ?? '').includes(this.search)
+                        );
+                    });
+                },
             }
         }
     </script>

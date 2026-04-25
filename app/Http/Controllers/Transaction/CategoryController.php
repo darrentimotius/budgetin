@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Auth;
 class CategoryController extends Controller
 {
     public function index() {
-        $categories = Category::all();
+        $categories = Category::where('user_id', Auth::id())->get();
         confirmDelete('Are you sure you want to delete this category?');
         return view('pages.transaction.category', ['title' => 'Category'], compact('categories'));
     }
 
-    public function create(Request $request){
+    public function store(Request $request){
         $validated = $request->validate([
             'name'=> ['required', 'string', 'max:100', 'unique:categories,name,NULL,id,user_id,' . Auth::id()],
             'monthly_budget'=> ['required'],
@@ -36,6 +36,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, $slug){
         $category = Category::where('slug', $slug)->firstOrFail();
+        
         $validated = $request->validate([
             'name'=> ['required', 'string', 'max:100', 'unique:categories,name,' . $category->id . ',id,user_id,' . Auth::id()],
             'monthly_budget'=> ['required'],
@@ -61,56 +62,5 @@ class CategoryController extends Controller
         return redirect()->route('category.index');
     }
 
-    public function getCategories() {
-        return [
-            (object) [
-                'id' => 1,
-                'icon' => 'home',
-                'name' => 'Shopping',
-                'monthly_budget' => 500000,
-                'expense_this_month' => 0,
-                'usage' => '0%',
-            ],
-            (object) [
-                'id' => 2,
-                'icon' => 'home',
-                'name' => 'Transportation',
-                'monthly_budget' => 500000,
-                'expense_this_month' => 0,
-                'usage' => '0%',
-            ],
-            (object) [
-                'id' => 3,
-                'icon' => 'home',
-                'name' => 'Daily Food',
-                'monthly_budget' => 500000,
-                'expense_this_month' => 0,
-                'usage' => '0%',
-            ],
-            (object) [
-                'id' => 4,
-                'icon' => 'home',
-                'name' => 'Dining Out',
-                'monthly_budget' => 500000,
-                'expense_this_month' => 0,
-                'usage' => '0%',
-            ],
-            (object) [
-                'id' => 5,
-                'icon' => 'home',
-                'name' => 'Subscription',
-                'monthly_budget' => 500000,
-                'expense_this_month' => 0,
-                'usage' => '0%',
-            ],
-            (object) [
-                'id' => 6,
-                'icon' => 'home',
-                'name' => 'Holiday',
-                'monthly_budget' => 500000,
-                'expense_this_month' => 0,
-                'usage' => '0%',
-            ],
-        ];
-    }
+    
 }
