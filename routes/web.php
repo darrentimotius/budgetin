@@ -118,6 +118,9 @@ Route::middleware(['auth'])->group(function(){
 
     Route::prefix('/expense')->as('expense.')->group(function(){
         Route::get('/', [ExpenseController::class, 'index'])->name('index');
+        Route::post('/create', [ExpenseController::class, 'store'])->name('store');
+        Route::post('/update/{id}', [ExpenseController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [ExpenseController::class, 'destroy'])->name('delete');
     });
 
     Route::prefix('/transfer')->as('transfer.')->group(function(){

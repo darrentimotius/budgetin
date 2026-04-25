@@ -17,7 +17,8 @@ class TransferController extends Controller
             ->where('user_id', Auth::id())
             ->where('type', 'transfer')
             ->get();
-            $accounts = Account::where('user_id', Auth::id())->get();
+
+        $accounts = Account::where('user_id', Auth::id())->get();
 
         confirmDelete('Are you sure you want to delete this transfer?');
         return(view('pages.transaction.transfer', ['title' => 'Transfer'], compact('transfers', 'accounts')));
@@ -66,9 +67,10 @@ class TransferController extends Controller
             toast()->success('Transfer successful!');
             return back();
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
-            dd($e->getMessage());
+            toast()->error('Transfer failed!');
+            return back();
         }
     }
 
@@ -132,9 +134,11 @@ class TransferController extends Controller
             toast()->success('Transfer updated!');
             return back();
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
-            dd($e->getMessage());
+
+            toast()->error('Transfer failed to update!');
+            return back();
         }
     }
 
