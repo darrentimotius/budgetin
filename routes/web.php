@@ -122,11 +122,14 @@ Route::middleware(['auth'])->group(function(){
 
     Route::prefix('/transfer')->as('transfer.')->group(function(){
         Route::get('/', [TransferController::class, 'index'])->name('index');
+        Route::post('/create', [TransferController::class, 'store'])->name('store');
+        Route::post('/update/{id}', [TransferController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [TransferController::class, 'destroy'])->name('delete');
     });
 
     Route::prefix('/category')->as('category.')->group(function(){
         Route::get('/', [CategoryController::class, 'index'])->name('index');
-        Route::post('/create', [CategoryController::class, 'create'])->name('create');
+        Route::post('/store', [CategoryController::class, 'store'])->name('store');
         Route::post('/update/{slug}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/delete/{slug}', [CategoryController::class, 'destroy'])->name('delete');
     });

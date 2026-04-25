@@ -1,0 +1,52 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Account;
+use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class AccountSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $users = User::all();
+
+        foreach ($users as $user) {
+            Account::insert([
+                [
+                    'user_id' => $user->id,
+                    'name' => 'BCA',
+                    'balance' => 0,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'user_id' => $user->id,
+                    'name' => 'BRI',
+                    'balance' => 0,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'user_id' => $user->id,
+                    'name' => 'BLU',
+                    'balance' => 0,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'user_id' => $user->id,
+                    'name' => 'Cash',
+                    'balance' => 0,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
+    }
+}

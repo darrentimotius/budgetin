@@ -16,9 +16,9 @@ return new class extends Migration
 
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('type', ['income', 'expense', 'transfer']);
-            
+
             // main relation
-            $table->foreignId('account_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('from_account_id')->nullable()->constrained('accounts')->nullOnDelete();
             // transfer only
             $table->foreignId('to_account_id')->nullable()->constrained('accounts')->nullOnDelete();
             // expense only 
