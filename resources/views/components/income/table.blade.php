@@ -102,7 +102,7 @@
 
                 <template x-if="paginatedincomes.length === 0">
                     <tr>
-                        <td colspan="6" class="py-8 text-center text-gray-500">
+                        <td colspan="7" class="py-8 text-center text-gray-500">
                             No incomes found
                         </td>
                     </tr>
