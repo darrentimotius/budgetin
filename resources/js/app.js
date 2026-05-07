@@ -50,6 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
         import('./components/chart/chart-13').then(module => module.initChartThirteen());
     }
 
+    if (document.querySelector('#targetPieChart')) {
+        import('./components/chart/target-pie-chart').then(module => module.pieChart());
+    }
+
     // Calendar init
     if (document.querySelector('#calendar')) {
         import('./components/calendar-init').then(module => module.calendarInit());

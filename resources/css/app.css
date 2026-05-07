@@ -356,8 +356,24 @@
   @apply !text-gray-700 dark:!text-gray-400;
 }
 
-.apexcharts-text {
-  @apply !fill-gray-700 dark:!fill-gray-400;
+.apexcharts-datalabel-value {
+  fill: #1d2939 !important;
+}
+
+.dark .apexcharts-datalabel-value {
+  fill: rgba(255,255,255,0.9) !important;
+}
+
+.apexcharts-datalabel-label {
+  fill: #667085 !important;
+}
+
+.dark .apexcharts-datalabel-label {
+  fill: #98a2b3 !important;
+}
+
+.apexcharts-radialbar-track path {
+  @apply !stroke-gray-200 dark:!stroke-gray-800;
 }
 
 .apexcharts-tooltip.apexcharts-theme-light {
