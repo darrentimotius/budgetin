@@ -45,14 +45,14 @@ Route::get('/blank', function () {
     return view('pages.blank', ['title' => 'Blank']);
 })->name('blank');
 
-// // chart pages
-// Route::get('/line-chart', function () {
-//     return view('pages.chart.line-chart', ['title' => 'Line Chart']);
-// })->name('line-chart');
+// chart pages
+Route::get('/line-chart', function () {
+    return view('pages.chart.line-chart', ['title' => 'Line Chart']);
+})->name('line-chart');
 
-// Route::get('/bar-chart', function () {
-//     return view('pages.chart.bar-chart', ['title' => 'Bar Chart']);
-// })->name('bar-chart');
+Route::get('/bar-chart', function () {
+    return view('pages.chart.bar-chart', ['title' => 'Bar Chart']);
+})->name('bar-chart');
 
 // // authentication pages
 // Route::get('/signin', function () {
