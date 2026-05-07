@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class Income extends Model
 {
     protected $fillable = [
         'user_id',
