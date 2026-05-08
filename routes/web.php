@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Transaction\CategoryController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Investment\InvesmentController;
+use App\Http\Controllers\Investment\InvestmentController;
 use App\Http\Controllers\Landing\LandingController;
 use App\Http\Controllers\User\ProfileControlller;
 use App\Http\Controllers\Report\ReportController;
@@ -138,7 +138,7 @@ Route::middleware(['auth'])->group(function(){
     });
 
     // Investment
-    Route::get('/investment', [InvesmentController::class, 'index'])->name('investment');
+    Route::get('/investment', [InvestmentController::class, 'index'])->name('investment');
 
     // Report
     Route::get('/report', [ReportController::class, 'index'])->name('report');
