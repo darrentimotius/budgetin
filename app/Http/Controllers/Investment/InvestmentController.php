@@ -40,7 +40,7 @@ class InvestmentController extends Controller
         $allocation_chart = $targets->map(function ($target) {
             return [
                 'label' => $target->title,
-                'value' => $target->total_target, // pakai target_amount
+                'value' => $target->total_target,
             ];
         })->values();
 
@@ -61,7 +61,7 @@ class InvestmentController extends Controller
             'allocation_chart' => $allocation_chart,
         ];
 
-        return view('pages.investment.investment', compact('datas'));
+        return view('pages.investment.investment', ['title' => 'Investment'], compact('datas'));
     }
 
     public function getTargets()

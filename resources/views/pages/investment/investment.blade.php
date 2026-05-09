@@ -13,20 +13,10 @@
                     class="pb-2 text-theme-sm font-medium transition-colors duration-300">
                     Allocation
                 </button>
-                <button @click="tab='portfolio'"
-                    :class="tab === 'portfolio' ? 'border-b-2 border-main text-main' : 'text-gray-500 dark:text-gray-400'"
-                    class="pb-2 text-theme-sm font-medium transition-colors duration-300">
-                    Portfolio
-                </button>
-                <button @click="tab='goal'"
-                    :class="tab === 'goal' ? 'border-b-2 border-main text-main' : 'text-gray-500 dark:text-gray-400'"
-                    class="pb-2 text-theme-sm font-medium transition-colors duration-300">
-                    Goal
-                </button>
                 <button @click="tab='history'"
                     :class="tab === 'history' ? 'border-b-2 border-main text-main' : 'text-gray-500 dark:text-gray-400'"
                     class="pb-2 text-theme-sm font-medium transition-colors duration-300">
-                    Transaction History
+                    History
                 </button>
             </div>
             <div class="grid grid-cols-2 gap-2 lg:flex lg:w-auto">
@@ -46,12 +36,6 @@
         <div class="mt-4">
             <div x-show="tab === 'allocation'">
                 <x-investment.allocation.allocation :datas="$datas" />
-            </div>
-            <div x-show="tab === 'portfolio'">
-                Portfolio content goes here...
-            </div>
-            <div x-show="tab === 'goal'">
-                Goal content goes here...
             </div>
             <div x-show="tab === 'history'">
                 Transaction History content goes here...

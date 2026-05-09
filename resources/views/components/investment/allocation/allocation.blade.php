@@ -1,6 +1,6 @@
 @props(['datas'])
 
-<div class="flex flex-col lg:flex-row gap-6 items-start">
+<div class="flex flex-col xl:flex-row gap-6 items-start">
     <div
         class="flex w-full lg:basis-[30%] rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div class="flex flex-col gap-8 w-full">
@@ -9,7 +9,7 @@
             </h3>
 
             <div class="flex justify-center items-center">
-                <div id="allocationChart" class="w-full max-w-[400px]" data-chart='@json($datas['allocation_chart'])'></div>
+                <div id="allocationChart" class="w-full" data-chart='@json($datas['allocation_chart'])'></div>
             </div>
         </div>
     </div>
