@@ -25,11 +25,6 @@
                         </p>
                         <p class="text-sm font-medium text-gray-800 dark:text-white/90">ERT 2489</p>
                     </div>
-
-                    <div>
-                        <p class="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">TAX ID</p>
-                        <p class="text-sm font-medium text-gray-800 dark:text-white/90">AS4568384</p>
-                    </div>
                 </div>
             </div>
             <button @click="$dispatch('open-address-info-modal')"
@@ -41,7 +36,7 @@
                         fill="" />
                 </svg>
                 Edit
-            </button> 
+            </button>
         </div>
     </div>
 
@@ -57,15 +52,16 @@
                     Update your details to keep your profile up-to-date.
                 </p>
             </div>
-            <form class="flex flex-col overflow-y-auto">
+            <form class="flex flex-col overflow-y-auto" action="{{ route('profile.update-address-information') }}" method="POST">
+                @csrf
                 <div class="custom-scrollbar max-h-[40vh] lg:max-h-[60vh] overflow-y-auto p-2">
                     <div class="mt-5">
-                        <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">   
+                        <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                             <div>
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     Country
                                 </label>
-                                <input type="text" value="United States"
+                                <input type="text" value="United States" name="country"
                                     class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
 
@@ -73,7 +69,7 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     City/State
                                 </label>
-                                <input type="text" value="Poenix, Arizona, United States"
+                                <input type="text" value="Poenix, Arizona, United States" name="city"
                                     class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
 
@@ -81,15 +77,7 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     Postal Code
                                 </label>
-                                <input type="text" value="ERT 2489"
-                                    class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
-                            </div>
-
-                            <div>
-                                <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                                    TAX ID
-                                </label>
-                                <input type="text" value="AS4568384"
+                                <input type="text" value="ERT 2489" name="postal_code"
                                     class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
                         </div>
@@ -100,7 +88,7 @@
                         class="flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] sm:w-auto">
                         Close
                     </button>
-                    <button @click="saveProfile" type="button"
+                    <button @click="saveProfile" type="submit"
                         class="flex w-full justify-center rounded-lg bg-main px-4 py-2.5 text-sm font-medium text-white hover:bg-main-hover sm:w-auto">
                         Save Changes
                     </button>

@@ -1,12 +1,12 @@
 <div x-data="{
     open: false,
-    
+
     firstName: 'Musharof',
     lastName: 'Chowdhury',
     email: 'randomuser@pimjo.com',
     phone: '+09 363 398 46',
     bio: 'Team Manager',
-    
+
     saveProfile(){
     console.log('Saving profile...');
     this.saved = true;
@@ -57,7 +57,7 @@
                         fill="" />
                 </svg>
                 Edit
-            </button> 
+            </button>
         </div>
     </div>
 
@@ -73,7 +73,8 @@
                     Update your details to keep your profile up-to-date.
                 </p>
             </div>
-            <form class="mt-2 flex flex-col overflow-y-auto">
+            <form class="mt-2 flex flex-col overflow-y-auto" action="{{ route('profile.update-profile-information') }}" method="POST">
+                @csrf
                 <div class="custom-scrollbar max-h-[40vh] lg:max-h-[60vh] overflow-y-auto p-2">
                     <div class="mt-5">
                         <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
@@ -81,7 +82,7 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     First Name
                                 </label>
-                                <input type="text" x-model="firstName"
+                                <input type="text" x-model="firstName" name="fname"
                                     class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
 
@@ -89,15 +90,15 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     Last Name
                                 </label>
-                                <input type="text" x-model="lastName"
-                                    class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
+                                <input type="text" x-model="lastName" name="lname"
+                                    class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
 
                             <div class="col-span-2 lg:col-span-1">
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     Email Address
                                 </label>
-                                <input type="text" x-model="email"
+                                <input type="text" x-model="email" name="email"
                                     class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
 
@@ -105,7 +106,7 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     Phone
                                 </label>
-                                <input type="text" x-model="phone"
+                                <input type="text" x-model="phone" name="phone"
                                     class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
 
@@ -113,7 +114,7 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     Bio
                                 </label>
-                                <textarea rows="4" x-model="bio"
+                                <textarea rows="4" x-model="bio" name="bio"
                                 class="dark:bg-dark-900 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
                                     placeholder="Write your bio here..."></textarea>
                             </div>
@@ -125,7 +126,7 @@
                         class="flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] sm:w-auto">
                         Close
                     </button>
-                    <button @click="saveProfile()" type="button"
+                    <button @click="saveProfile()" type="submit"
                         class="flex w-full justify-center rounded-lg bg-main px-4 py-2.5 text-sm font-medium text-white hover:bg-main-hover sm:w-auto">
                         Save Changes
                     </button>
