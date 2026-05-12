@@ -12,22 +12,23 @@ class InvestmentController extends Controller
 
             $items = collect($target->items);
 
-            $target->total_target = $items->sum('target_amount');
             $target->total_current = $items->sum('current_amount');
 
-            $target->percentage = $target->total_target > 0
-                ? round(($target->total_current / $target->total_target) * 100, 0)
+            $target->percentage = $target->target_amount > 0
+                ? round(($target->total_current / $target->target_amount) * 100, 0)
                 : 0;
 
             $target->items = $items->map(function ($item) use ($target) {
+
+                $item->target_amount = round(
+                    $target->target_amount * $item->allocation
+                );
 
                 $item->percentage = $item->target_amount > 0
                     ? round(($item->current_amount / $item->target_amount) * 100, 0)
                     : 0;
 
-                $item->allocation = $target->total_target > 0
-                    ? round(($item->target_amount / $target->total_target) * 100, 0)
-                    : 0;
+                $item->allocation_percentage = round($item->allocation * 100);
 
                 return $item;
             });
@@ -35,12 +36,12 @@ class InvestmentController extends Controller
             return $target;
         });
 
-        $total_target = $targets->sum('total_target');
+        $total_target = $targets->sum('target_amount');
         $total_investment = $targets->sum('total_current');
         $allocation_chart = $targets->map(function ($target) {
             return [
                 'label' => $target->title,
-                'value' => $target->total_target,
+                'value' => $target->target_amount,
             ];
         })->values();
 
@@ -70,42 +71,29 @@ class InvestmentController extends Controller
             (object) [
                 'title' => 'Emergency Fund',
                 'icon' => 'home',
+                'target_amount' => 25000000,
                 'items' => [
                     (object) [
                         'title' => 'Cash',
-                        'icon' => 'home',
-                        'current_amount' => 10000000,
-                        'target_amount' => 20000000,
-                    ],
-                    (object) [
+                        'allocation' => 0.5,
+                        'current_amount' => 6000000,
+                        ],
+                        (object) [
                         'title' => 'Money Market',
-                        'icon' => 'credit-card',
-                        'current_amount' => 15000000,
-                        'target_amount' => 20000000,
+                        'allocation' => 0.5,
+                        'current_amount' => 5000000,
                     ],
                 ],
             ],
             (object) [
                 'title' => 'Monthly Savings',
                 'icon' => 'credit-card',
+                'target_amount' => 15000000,
                 'items' => [
                     (object) [
                         'title' => 'blu',
-                        'icon' => 'home',
+                        'allocation' => 1,
                         'current_amount' => 5000000,
-                        'target_amount' => 15000000,
-                    ],
-                    (object) [
-                        'title' => 'blu',
-                        'icon' => 'home',
-                        'current_amount' => 5000000,
-                        'target_amount' => 15000000,
-                    ],
-                    (object) [
-                        'title' => 'blu',
-                        'icon' => 'home',
-                        'current_amount' => 5000000,
-                        'target_amount' => 15000000,
                     ],
                 ],
             ],
