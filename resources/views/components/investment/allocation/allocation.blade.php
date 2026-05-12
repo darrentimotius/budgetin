@@ -29,6 +29,9 @@
                             <div class="text-md font-semibold text-gray-800 dark:text-white/90">
                                 {{ $target->title }}
                             </div>
+                            <div class="text-theme-xs text-gray-800 dark:text-white/90">
+                                IDR {{ number_format($target->target_amount, 0, ',', '.') }}
+                            </div>
                             <div class="text-theme-xs text-gray-500 dark:text-gray-400">
                                 {{ count($target->items) }} Investments
                             </div>
