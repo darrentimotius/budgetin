@@ -45,45 +45,67 @@
                     Permanently remove your account and all associated data.
                 </p>
             </div>
-            <form>
-                <button type="submit" data-confirm-delete="true"
-                    class="rounded-lg border border-red-300 px-5 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-500/10">
-                    Delete Account
-                </button>
-            </form>
+
+            <a href="{{ route('settings.delete-account') }}" type="submit" data-confirm-delete="true"
+                class="rounded-lg border border-red-300 px-5 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-500/10">
+                Delete Account
+            </a>
         </div>
 
     </div>
 @endsection
 
 <x-ui.modal
-    @open-password-modal.window="open = true" :isOpen="false" class="max-w-[500px]">
+    @open-password-modal.window="open = true" :isOpen="$errors->any()" class="max-w-[500px]">
     <div class="p-6 lg:p-8">
         <div class="mb-6">
             <h4 class="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">Change Password</h4>
             <p class="text-sm text-gray-500 dark:text-gray-400">Update your password to keep your account secure.</p>
         </div>
-        <form class="flex flex-col gap-5">
+        <form class="flex flex-col gap-5" 
+            method="POST"
+            action="{{ route('settings.change-password') }}"
+        >
+            @csrf
+            @method('POST')
             <div>
                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Current Password</label>
                 <input
+                    name="currentPassword"
+                    value="{{ old('currentPassword') }}"
                     type="password"
                     placeholder="Enter current password"
                     class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" />
+            
+                    @error('currentPassword')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
             </div>
             <div>
                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">New Password</label>
                 <input
+                    name="newPassword"
+                    value="{{ old('newPassword') }}"
                     type="password"
                     placeholder="Enter new password"
                     class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" />
+
+                    @error('newPassword')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
             </div>
             <div>
                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Confirm Password</label>
                 <input
+                    name="confirmPassword"
+                    value="{{ old('confirmPassword') }}"
                     type="password"
                     placeholder="Confirm new password"
                     class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" />
+
+                    @error('confirmPassword')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
             </div>
             <div class="mt-4 flex items-center justify-end gap-3">
                 <button
@@ -101,3 +123,4 @@
         </form>
     </div>
 </x-ui.modal>
+
