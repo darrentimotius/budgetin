@@ -1,16 +1,4 @@
-<div x-data="{
-    open: false,
-    
-    firstName: 'Musharof',
-    lastName: 'Chowdhury',
-    email: 'randomuser@pimjo.com',
-    phone: '+09 363 398 46',
-    bio: 'Team Manager',
-    
-    saveProfile(){
-    console.log('Saving profile...');
-    this.saved = true;
-}}">
+<div>
     <div class="p-5 mb-6 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div>
@@ -21,29 +9,29 @@
                 <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
                     <div>
                         <p class="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">First Name</p>
-                        <p class="text-sm font-medium text-gray-800 dark:text-white/90" x-text="firstName"></p>
+                        <p class="text-sm font-medium text-gray-800 dark:text-white/90">{{ auth()->user()->fname }}</p>
                     </div>
 
                     <div>
                         <p class="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">Last Name</p>
-                        <p class="text-sm font-medium text-gray-800 dark:text-white/90" x-text="lastName"></p>
+                        <p class="text-sm font-medium text-gray-800 dark:text-white/90">{{ auth()->user()->lname }}</p>
                     </div>
 
                     <div>
                         <p class="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
                             Email address
                         </p>
-                        <p class="text-sm font-medium text-gray-800 dark:text-white/90" x-text="email"></p>
+                        <p class="text-sm font-medium text-gray-800 dark:text-white/90">{{ auth()->user()->email }}</p>
                     </div>
 
                     <div>
                         <p class="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">Phone</p>
-                        <p class="text-sm font-medium text-gray-800 dark:text-white/90" x-text="phone"></p>
+                        <p class="text-sm font-medium text-gray-800 dark:text-white/90">{{ auth()->user()->profile?->phone ?? '-' }}</p>
                     </div>
 
                     <div>
                         <p class="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">Bio</p>
-                        <p class="text-sm font-medium text-gray-800 dark:text-white/90" x-text="bio"></p>
+                        <p class="text-sm font-medium text-gray-800 dark:text-white/90">{{ auth()->user()->profile?->bio ?? '-' }}</p>
                     </div>
                 </div>
             </div>
@@ -73,7 +61,9 @@
                     Update your details to keep your profile up-to-date.
                 </p>
             </div>
-            <form class="mt-2 flex flex-col overflow-y-auto">
+            <form class="mt-2 flex flex-col overflow-y-auto" method="POST" action="{{ route('profile.update-profile-information') }}">
+                @csrf
+                @method('POST')
                 <div class="custom-scrollbar max-h-[40vh] lg:max-h-[60vh] overflow-y-auto p-2">
                     <div class="mt-5">
                         <div class="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
@@ -81,7 +71,7 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     First Name
                                 </label>
-                                <input type="text" x-model="firstName"
+                                <input type="text" x-model="firstName" name="fname"
                                     class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
 
@@ -89,7 +79,7 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     Last Name
                                 </label>
-                                <input type="text" x-model="lastName"
+                                <input type="text" x-model="lastName" name="lname"
                                     class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
 
@@ -97,7 +87,7 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     Email Address
                                 </label>
-                                <input type="text" x-model="email"
+                                <input type="text" x-model="email" name="email"
                                     class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
 
@@ -105,7 +95,7 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     Phone
                                 </label>
-                                <input type="text" x-model="phone"
+                                <input type="text" x-model="phone" name="phone"
                                     class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800" />
                             </div>
 
@@ -113,7 +103,7 @@
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                     Bio
                                 </label>
-                                <textarea rows="4" x-model="bio"
+                                <textarea rows="4" x-model="bio" name="bio"
                                 class="dark:bg-dark-900 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
                                     placeholder="Write your bio here..."></textarea>
                             </div>
@@ -125,7 +115,7 @@
                         class="flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] sm:w-auto">
                         Close
                     </button>
-                    <button @click="saveProfile()" type="button"
+                    <button type="submit"
                         class="flex w-full justify-center rounded-lg bg-main px-4 py-2.5 text-sm font-medium text-white hover:bg-main-hover sm:w-auto">
                         Save Changes
                     </button>
