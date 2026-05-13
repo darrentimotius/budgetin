@@ -1,6 +1,8 @@
 <div x-data="investmentPage()">
-    <x-ui.modal x-data="{ open: false }" @add-investment.window="open = true" :isOpen="false" class="max-w-[700px]">
+    <x-ui.modal x-data="{ open: {{ $errors->investment->any() ? 'true' : 'false' }} }" @add-investment.window="open = true" :isOpen="$errors->investment->any()" class="max-w-[700px]">
         <div x-data="{
+            goals: @js($goals),
+            selectedGoal: null,
             investment: {
                 name: '',
                 goal: '',
@@ -17,6 +19,7 @@
                     amount: '',
                     amount_display: '',
                 };
+                this.selectedGoal = null;
             }
         }" @add-investment.window="resetModal()"
             class="no-scrollbar relative w-full max-w-[700px] max-h-[80vh] rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11 overflow-y-auto">
@@ -28,14 +31,19 @@
                     Add an investment and set how much of your goal it should cover.
                 </p>
             </div>
-            <form class="flex flex-col">
+            <form class="flex flex-col" method="POST" action="{{ route('investment.store') }}">
+                @csrf 
+                @method('POST')
                 <div class="custom-scrollbar max-h-[40vh] lg:max-h-[60vh] flex flex-col gap-5 overflow-y-auto p-2">
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                             Investment Name
                         </label>
-                        <input type="text" name="investment_name" x-model="investment.name"
+                        <input type="text" name="name" x-model="investment.name"
                             class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
+                        @error('name', 'investment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
@@ -43,21 +51,23 @@
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent mb-5">
                             <select
+                                name="goal_id"
+                                x-model="investment.goal"
+                                @change="
+                                    isOptionSelected = true;
+                                    selectedGoal = goals.find(goal => goal.id == $event.target.value);
+                                "
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
-                                @change="isOptionSelected = true">
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                >
+                                <option disabled value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
                                     Select Option
                                 </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Emergency Fund
+                                @foreach ($goals as $goal)
+                                <option value="{{ $goal->id }}" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                    {{ $goal->name }}
                                 </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Template
-                                </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Development
-                                </option>
+                                @endforeach
                             </select>
                             <span
                                 class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
@@ -67,13 +77,27 @@
                                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </span>
+                            @error('goal_id', 'investment')
+                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
-                        <x-ui.alert
-                    variant="info"
-                    title="Emergency Fund Target Amount:"
-                    message="IDR 50.000.000"
-                    :showLink="false"
-                />
+                        <div x-show="selectedGoal">
+                            <x-ui.alert
+                                variant="info"
+                                :showLink="false"
+                            >
+                                <div>
+                                    <p class="font-medium text-blue-800 dark:text-blue-200">
+                                        <span x-text="selectedGoal.name"></span>
+                                        Target Amount:
+                                    </p>
+
+                                    <p class="text-sm text-blue-700 dark:text-blue-300">
+                                        IDR <span x-text="formatRupiah(parseInt(selectedGoal.target_amount))"></span>
+                                    </p>
+                                </div>
+                            </x-ui.alert>
+                        </div>
                     </div>
                     <div>
                         <label class="mb-3 block text-sm font-medium text-gray-700 dark:text-gray-400">
@@ -89,14 +113,28 @@
                                     Allocation (%)
                                 </label>
                                 <div class="relative">
-                                    <input type="text" x-model="investment.allocation"
-                                        @input="investment.allocation = investment.allocation.replace(/[^0-9]/g, ''); if (investment.allocation > 100) investment.allocation = 100;"
+                                    <input type="number" name="allocation_percent" x-model="investment.allocation"
+                                        @input="
+                                            investment.allocation = investment.allocation.replace(/[^00-9.]/g);
+                                            if(investment.allocation > 100) {
+                                                investment.allocation = 100
+                                            }
+
+                                            if(selectedGoal && investment.allocation != ''){
+                                                investment.amount = (parseInt(selectedGoal.target_amount) * investment.allocation) / 100;
+                                                investment.amount = Math.round(investment.amount);
+                                                investment.amount_display = (formatRupiah(investment.amount));
+                                            }
+                                        "
                                         class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pr-12 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
                                     <span
                                         class="absolute top-1/2 right-4 inline-flex -translate-y-1/2 items-center text-gray-500 dark:text-gray-400">
                                         %
                                     </span>
                                 </div>
+                                @error('allocation_percent', 'investment')
+                                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
                             <i data-lucide="arrow-left-right" class="w-5 h-5 text-gray-900 dark:text-white self-end mb-3"></i>
                             <div>
@@ -109,10 +147,26 @@
                                         IDR
                                     </span>
                                     <input type="text" x-model="investment.amount_display"
-                                        @input="investment.amount_display = formatRupiah($event.target.value); investment.amount = $event.target.value.replace(/\D/g, '');"
+                                        @input="
+                                            investment.amount_display = formatRupiah($event.target.value);
+                                            investment.amount = $event.target.value.replace(/\D/g, '');
+
+                                            if(selectedGoal && investment.amount != ''){
+                                                investment.allocation = Math.round((parseInt(investment.amount) / parseInt(selectedGoal.target_amount)) * 100);
+                                                if(investment.allocation > 100){
+                                                    investment.allocation = 100;
+                                                }
+                                            } else {
+                                                investment.allocation = '';
+                                            }
+                                        "
                                         class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pl-16 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
-                                    <input type="hidden" name="investment_amount" :value="investment.amount" />
+                                    <input type="hidden" name="planned_amount" :value="investment.amount" />
+                                    
                                 </div>
+                                @error('planned_amount', 'investment')
+                                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>

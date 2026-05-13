@@ -6,7 +6,7 @@
 </style>
 
 <div x-data="investmentPage()">
-    <x-ui.modal x-data="{ open: false }" @record-investment.window="open = true" :isOpen="false" class="max-w-[700px]">
+    <x-ui.modal x-data="{ open: {{ $errors->record_investment->any() ? 'true' : 'false' }} }" @record-investment.window="open = true" :isOpen="$errors->record_investment->any()" class="max-w-[700px]">
         <div x-data="{
             investment: {
                 name: '',
@@ -38,7 +38,9 @@
                     Record an investment you have made towards your selected goal.
                 </p>
             </div>
-            <form class="flex flex-col">
+            <form class="flex flex-col" method="POST" action="{{ route('investment.store-record-investment') }}">
+                @csrf
+                @method('POST')
                 <div class="custom-scrollbar max-h-[40vh] lg:max-h-[60vh] flex flex-col gap-5 overflow-y-auto p-2">
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
@@ -46,21 +48,19 @@
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
                             <select
+                                name="goal_id"
+                                x-model="investment.goal"
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
                                 @change="isOptionSelected = true">
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                <option disabled value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
                                     Select Option
                                 </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Emergency Fund
+                                @foreach($goals as $goal)
+                                <option value="{{ $goal->id }}" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                    {{ $goal->name }}
                                 </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Template
-                                </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Development
-                                </option>
+                                @endforeach
                             </select>
                             <span
                                 class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
@@ -70,6 +70,9 @@
                                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </span>
+                            @error('goal_id', 'record_investment')
+                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div>
@@ -78,21 +81,19 @@
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
                             <select
+                                name="investment_id"
+                                x-model="investment.name"
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
                                 @change="isOptionSelected = true">
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                <option disabled value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
                                     Select Option
                                 </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Emergency Fund
+                                @foreach ($investments as $investment)
+                                <option value="{{ $investment->id }}" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                    {{ $investment->name }}
                                 </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Template
-                                </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Development
-                                </option>
+                                @endforeach
                             </select>
                             <span
                                 class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
@@ -102,6 +103,9 @@
                                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </span>
+                            @error('investment_id', 'record_investment')
+                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div>
@@ -110,21 +114,19 @@
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
                             <select
+                                name="account_id"
+                                x-model="investment.account_bank"
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
                                 @change="isOptionSelected = true">
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                <option disabled value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
                                     Select Option
                                 </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Emergency Fund
+                                @foreach ($accounts as $account)
+                                <option value="{{ $account->id }}" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                    {{ $account->name }}
                                 </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Template
-                                </option>
-                                <option value="" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                    Development
-                                </option>
+                                @endforeach
                             </select>
                             <span
                                 class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
@@ -134,6 +136,9 @@
                                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </span>
+                            @error('account_id', 'record_investment')
+                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
@@ -145,6 +150,9 @@
                                 <x-form.date-picker id="date_pick" name="date" placeholder="Date Picker"
                                     x-model="income.date" defaultDate="{{ now()->format('d-m-Y') }}" />
                             </div>
+                            @error('date', 'record_investment')
+                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
@@ -159,8 +167,11 @@
                                 <input type="text" x-model="investment.amount_display"
                                     @input="investment.amount_display = formatRupiah($event.target.value); investment.amount = $event.target.value.replace(/\D/g, '');"
                                     class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pl-16 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
-                                <input type="hidden" name="investment_amount" :value="investment.amount" />
+                                <input type="hidden" name="transaction_amount" :value="investment.amount" />
                             </div>
+                            @error('transaction_amount', 'record_investment')
+                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 
@@ -171,7 +182,11 @@
                         <textarea x-model="income.description" placeholder="Enter a description..." type="text" rows="6"
                             name="description"
                             class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"></textarea>
+                        @error('description', 'record_investment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
+
 
                     <div class="flex items-center gap-3 px-2 mt-6 lg:justify-end">
                         <button @click="open = false" type="button"
