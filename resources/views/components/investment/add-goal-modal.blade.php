@@ -1,7 +1,8 @@
 <div x-data="investmentPage()">
-    <x-ui.modal x-data="{ open: false }"
+    <x-ui.modal 
+    x-data="{ open: {{ $errors->goal->any() ? 'true' : 'false' }} }"
     @add-goal.window="open = true"
-    :isOpen="false"
+    :isOpen="$errors->goal->any()"
     class="max-w-[700px]">
         <div x-data="{
             target: {
@@ -33,7 +34,9 @@
                     Create a new financial goal to track your savings and investments.
                 </p>
             </div>
-            <form class="flex flex-col">
+            <form class="flex flex-col" method="POST" action="{{ route('investment.store-goal') }}">
+                @csrf
+                @method('POST')
                 <div class="custom-scrollbar max-h-[40vh] lg:max-h-[60vh] flex flex-col gap-5 overflow-y-auto p-2">
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
@@ -41,9 +44,13 @@
                         </label>
                         <div class="relative flex items-center gap-2">
                             <x-icon.icon-picker @target-icon-set.window="selected = $event.detail; refresh()" />
-                            <input type="text" name="target_name" x-model="target.name"
+                            <input type="text" name="name" x-model="target.name"
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
+                            
                         </div>
+                        @error('name', 'goal')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
@@ -59,9 +66,12 @@
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 pl-16 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
                             <input type="hidden" name="target_amount" :value="target.amount" />
                         </div>
+                        @error('target_amount', 'goal')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="flex items-center gap-3 px-2 mt-6 lg:justify-end">
-                        <button @click="open = false" type="button"
+                        <button @click="open = false; showErrors= false" type="button"
                             class="flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] sm:w-auto">
                             Close
                         </button>
