@@ -8,6 +8,7 @@ use App\Models\Investment;
 use App\Models\RecordInvestment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RecordInvestmentController extends Controller
 {
@@ -98,10 +99,7 @@ class RecordInvestmentController extends Controller
                 'investment_id' => $investment->id,
                 'goal_id' => $goal->id,
                 'account_id' => $validated['account_id'],
-                'date' => Carbon::createFromFormat(
-                    'd-m-Y',
-                    $validated['date']
-                )->format('Y-m-d'),
+                'date' => Carbon::createFromFormat('Y-m-d', $validated['date'])->format('Y-m-d'),
                 'transaction_amount' => $validated['transaction_amount'],
                 'description' => $validated['description'],
             ]);
@@ -123,6 +121,69 @@ class RecordInvestmentController extends Controller
             return redirect()
                 ->back()
                 ->withInput();
+        }
+    }
+
+    public function print(Request $request)
+    {
+        try {
+            $query = RecordInvestment::with([
+                'investment',
+                'goal',
+                'account',
+            ])
+            ->whereHas('investment', function ($query) {
+                $query->where('user_id', auth()->id());
+            });
+
+            if ($request->filter === 'day' && $request->filled('date')) {
+                $query->whereDate(
+                    'date',
+                    Carbon::parse($request->date)
+                );
+
+            } elseif ($request->filter === 'month' && $request->filled('month')) {
+                $date = Carbon::parse($request->month);
+                $query->whereYear('date', $date->year)
+                    ->whereMonth('date', $date->month);
+            }
+
+            $records = $query
+                ->orderBy('date', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $totalInvestment = $records->sum('transaction_amount');
+            $pdf = Pdf::loadView(
+                'components.investment.history.pdf',
+                [
+                    'records' => $records,
+                    'filter' => $request->filter,
+                    'selectedDate' => $request->date,
+                    'selectedMonth' => $request->month,
+                    'totalInvestment' => $totalInvestment,
+                ]
+            )->setPaper('a4', 'landscape');
+
+            $firstName = explode(' ', auth()->user()->name)[0];
+            if ($request->filter === 'day' && $request->filled('date')) {
+                $period = Carbon::parse($request->date)
+                    ->format('Y-m-d');
+
+            } elseif ($request->filter === 'month' && $request->filled('month')) {
+                $period = Carbon::parse($request->month)
+                    ->format('F_Y');
+            } else {
+                $period = now()->format('Y-m-d');
+            }
+
+            $fileName = "Budgetin_{$firstName}_Investment_History_{$period}.pdf";
+            return $pdf->download($fileName);
+
+        } catch (\Throwable $th) {
+            report($th);
+            toast()->error('Failed to generate investment history.');
+            return redirect()->back();
         }
     }
 }

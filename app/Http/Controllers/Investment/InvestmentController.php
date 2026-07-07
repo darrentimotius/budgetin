@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Investment;
 use App\Http\Controllers\Controller;
 use App\Models\Account;
 use App\Models\Goal;
+use App\Models\Investment;
+use App\Models\RecordInvestment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Investment;
