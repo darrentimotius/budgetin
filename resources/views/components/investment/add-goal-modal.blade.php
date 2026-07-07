@@ -42,7 +42,6 @@
                 <div class="custom-scrollbar max-h-[40vh] lg:max-h-[60vh] flex flex-col gap-5 overflow-y-auto p-2">
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                            Goal Name<span class="text-red-500">*</span>
                             {{__('common.goal_name') }}
                         </label>
                         <div class="relative flex items-center gap-2">
@@ -57,7 +56,6 @@
                     </div>
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                            Target Amount<span class="text-red-500">*</span>
                             {{ __('common.target_amount') }}
                         </label>
                         <div class="relative">
