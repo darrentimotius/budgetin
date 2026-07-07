@@ -9,7 +9,6 @@ use App\Models\Investment;
 use App\Models\RecordInvestment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Investment;
 use Illuminate\Support\Facades\Log;
 
 class InvestmentController extends Controller
@@ -20,22 +19,14 @@ class InvestmentController extends Controller
 
             $targets = collect($this->getTargets())->map(function ($target) {
 
-                $items = collect($target->items);
-
-                $target->total_current = $items->sum('current_amount');
-
-                $target->percentage = $target->target_amount > 0
-                    ? round(($target->total_current / $target->target_amount) * 100, 0)
-                    : 0;
-
-                $target->items = $items->map(function ($item) use ($target) {
+                $target->items = collect($target->items)->map(function ($item) use ($target) {
 
                     $item->target_amount = round(
                         $target->target_amount * $item->allocation
                     );
 
                     $item->percentage = $item->target_amount > 0
-                        ? round(($item->current_amount / $item->target_amount) * 100, 0)
+                        ? round(($item->current_amount / $item->target_amount) * 100)
                         : 0;
 
                     $item->allocation_percentage = round($item->allocation * 100);
@@ -79,6 +70,16 @@ class InvestmentController extends Controller
 
             $accounts = Account::where('user_id', Auth::id())->get();
 
+            $histories = RecordInvestment::with([
+            'investment.goal',
+            'account',
+        ])
+        ->whereHas('investment', function ($query) {
+            $query->where('user_id', Auth::id());
+        })
+        ->latest('date')
+        ->get();
+
             confirmDelete('Are you sure you want to delete this investment?');
 
             return view(
@@ -88,6 +89,7 @@ class InvestmentController extends Controller
                     'datas' => $datas,
                     'goals' => $goals,
                     'accounts' => $accounts,
+                    'histories'=>$histories,
                 ]
             );
 
@@ -123,23 +125,34 @@ class InvestmentController extends Controller
 
             return $goals->map(function ($goal) {
 
+                $items = $goal->investments->map(function ($investment) {
+
+                    return (object) [
+                        'id' => $investment->id,
+                        'title' => $investment->name,
+                        'allocation' => $investment->allocation_percent / 100,
+                        'current_amount' => $investment->records->sum('transaction_amount'),
+                    ];
+                });
+
+                $totalCurrent = $items->sum('current_amount');
+
                 return (object) [
                     'id' => $goal->id,
-                    'title' => $goal->name,
+                    'name' => $goal->name,      // untuk modal edit
+                    'title' => $goal->name,     // tetap dipakai chart
                     'icon' => $goal->icon,
                     'target_amount' => $goal->target_amount,
                     'target_date' => $goal->target_date,
                     'days_left' => $goal->daysUntilDeadline(),
 
-                    'items' => $goal->investments->map(function ($investment) {
+                    // tambahkan ini
+                    'total_current' => $totalCurrent,
+                    'percentage' => $goal->target_amount > 0
+                        ? round(($totalCurrent / $goal->target_amount) * 100)
+                        : 0,
 
-                        return (object) [
-                            'id' => $investment->id,
-                            'title' => $investment->name,
-                            'allocation' => $investment->allocation_percent / 100,
-                            'current_amount' => $investment->records->sum('transaction_amount'),
-                        ];
-                    }),
+                    'items' => $items,
                 ];
             });
 
