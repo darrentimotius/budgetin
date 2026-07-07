@@ -41,6 +41,7 @@
                 <div class="custom-scrollbar max-h-[40vh] lg:max-h-[60vh] flex flex-col gap-5 overflow-y-auto p-2">
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Investment Name<span class="text-red-500">*</span>
                             {{ __('common.investment_name') }}
                         </label>
                         <input type="text" name="name" x-model="investment.name"
@@ -51,6 +52,7 @@
                     </div>
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Goal<span class="text-red-500">*</span>
                             {{ __('common.goal') }}
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent mb-5">
@@ -113,6 +115,7 @@
                         <div class="flex items-center justify-between gap-5">
                             <div>
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                                    Allocation (%)<span class="text-red-500">*</span>
                                     {{ __('common.allocation') }} (%)
                                 </label>
                                 <div class="relative">
@@ -145,6 +148,7 @@
                             <i data-lucide="arrow-left-right" class="w-5 h-5 text-gray-900 dark:text-white self-end mb-3"></i>
                             <div>
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                                    Allocation Amount<span class="text-red-500">*</span>
                                     {{ __('common.allocation_amount') }}
                                 </label>
                                 <div class="relative">
