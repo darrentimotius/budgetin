@@ -54,8 +54,10 @@
                 @csrf
                 @method('POST')
                 <div class="custom-scrollbar max-h-[40vh] lg:max-h-[60vh] flex flex-col gap-5 overflow-y-auto p-2">
+                    
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Goal<span class="text-red-500">*</span>
                             {{ __('common.goal') }}
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
@@ -82,13 +84,15 @@
                                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </span>
-                            @error('goal_id', 'record_investment')
-                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                            @enderror
                         </div>
+                        @error('goal_id', 'record_investment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
+
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Investment Name<span class="text-red-500">*</span>
                             {{ __('common.investment_name') }}
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
@@ -113,13 +117,15 @@
                                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </span>
-                            @error('investment_id', 'record_investment')
-                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                            @enderror
                         </div>
+                        @error('investment_id', 'record_investment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
+
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Account Bank<span class="text-red-500">*</span>
                             {{ __('common.account_bank') }}
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
@@ -146,14 +152,27 @@
                                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </span>
-                            @error('account_id', 'record_investment')
-                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                            @enderror
                         </div>
+                        @error('account_id', 'record_investment')
+                            <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
+
+                    <div class="grid grid-cols-2 gap-4 items-start">
                         <div>
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                                Date<span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative w-full">
+                                <x-form.date-picker
+                                        id="date_pick"
+                                        name="date"
+                                        placeholder="Date Picker"
+                                        x-model="investment.date"
+                                        dateFormat="Y-m-d"
+                                        altFormat="d F Y"
+                                        defaultDate="{{ old('date', now()->format('Y-m-d')) }}"
+                                    />
                                 {{ __('common.date') }}
                             </label>
                             <div class="relative w-full">
@@ -173,6 +192,7 @@
 
                         <div>
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                                Allocation Amount<span class="text-red-500">*</span>
                                 {{ __('common.allocation_amount') }}
                             </label>
                             <div class="relative">
@@ -193,6 +213,9 @@
 
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Description (Optional)
+                        </label>
+                        <textarea x-model="investment.description" placeholder="Enter a description..." type="text" rows="6"
                             {{ __('common.description') }}
                         </label>
                         <textarea x-model="income.description" placeholder="{{ __('common.description_placeholder') }}" type="text" rows="6"
@@ -202,7 +225,6 @@
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
-
 
                     <div class="flex items-center gap-3 px-2 mt-6 lg:justify-end">
                         <button @click="open = false" type="button"

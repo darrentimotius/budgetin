@@ -84,6 +84,7 @@
                 <div class = "flex lg:flex-row flex-col lg:gap-10 gap-5">
                     <div class="lg:w-2/3">
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Expense Title<span class="text-red-500">*</span>
                             {{ __('common.expense_title') }}
                         </label>
                         <div class="relative flex items-center gap-2">
@@ -98,6 +99,7 @@
 
                     <div class="lg:w-1/3">
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Category<span class="text-red-500">*</span>
                             {{ __('nav.category') }}
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
@@ -136,6 +138,7 @@
                 <div class="flex lg:flex-row flex-col lg:gap-10 gap-5">
                     <div class="lg:w-2/3">
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Amount<span class="text-red-500">*</span>
                             {{ __('common.amount') }}
                         </label>
                         <div class="relative">
@@ -155,6 +158,7 @@
 
                     <div class="lg:w-1/3">
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Account Bank<span class="text-red-500">*</span>
                             {{ __('common.account_bank') }}
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
