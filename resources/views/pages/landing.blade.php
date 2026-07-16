@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="min-h-screen flex flex-col overflow-x-hidden bg-white dark:bg-gray-900">
-        {{-- Hero Section --}}
         <section
             class="relative isolate min-h-[100svh] w-full overflow-hidden
         lg:min-h-screen
@@ -11,98 +10,89 @@
 
             <div
                 class="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[1600px] flex-col
-        px-6 pb-28 pt-14
+                px-6 pb-28 pt-14
 
-        sm:px-10 sm:pb-32 sm:pt-10
+                sm:px-10 sm:pb-32 sm:pt-10
 
-        lg:min-h-screen
-        lg:px-16 lg:pb-36 lg:pt-12
+                lg:min-h-screen
+                lg:px-16 lg:pb-36 lg:pt-12
 
-        xl:px-24 xl:pt-14
-        2xl:px-28">
-                {{-- Logo --}}
+                xl:px-24 xl:pt-14
+                2xl:px-28">
                 <div class="shrink-0">
                     <img src="/images/logo/logo.png" alt="BudGetIn Logo" class="w-28 sm:w-25 lg:w-52 xl:w-60">
                 </div>
 
-                {{-- Hero Content --}}
                 <div
-    class="mt-10 flex flex-1 flex-col
-    lg:mt-5 lg:grid lg:items-center lg:gap-8 lg:py-4
-    lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]
-    xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+                    class="mt-10 flex flex-1 flex-col
+                    lg:mt-5 lg:grid lg:items-center lg:gap-8 lg:py-4
+                    lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]
+                    xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
 
-    {{-- Text --}}
-    <div
-        class="relative z-20 flex w-full flex-col items-start
-        lg:max-w-1xl lg:gap-8 lg:pb-8">
+                    <div class="relative z-20 flex w-full flex-col items-start lg:max-w-1xl lg:gap-8 lg:pb-8">
 
-        <h1
-            class="max-w-[310px] text-[2rem] font-medium leading-[1.08]
-            text-gray-800
-            sm:max-w-[560px] sm:text-3xl
-            lg:text-4xl
-            xl:text-5xl
-            dark:text-white/90">
+                        <h1
+                            class="max-w-[310px] text-[2rem] font-medium leading-[1.08]
+                            text-gray-800
+                            sm:max-w-[560px] sm:text-3xl
+                            lg:text-4xl
+                            xl:text-5xl
+                            dark:text-white/90">
 
-            <span class="block">Take Control of Your</span>
-            <span class="block">Finances,</span>
-            <span class="block">Effortlessly</span>
-        </h1>
+                            <span class="block">Take Control of Your</span>
+                            <span class="block">Finances,</span>
+                            <span class="block">Effortlessly</span>
+                        </h1>
 
-        <p
-            class="mt-9 max-w-[260px] text-sm font-light leading-[1.25]
-            text-gray-800
-            sm:max-w-2xl sm:text-base sm:leading-relaxed
-            lg:mt-0 lg:text-lg
-            dark:text-white/90">
+                        <p
+                            class="mt-9 max-w-[260px] text-sm font-light leading-[1.25]
+                            text-gray-800
+                            sm:max-w-2xl sm:text-base sm:leading-relaxed
+                            lg:mt-0 lg:text-lg
+                            dark:text-white/90">
 
-            Track your income, manage expenses, and plan your financial
-            future with a simple yet powerful platform.
-        </p>
+                            Track your income, manage expenses, and plan your financial
+                            future with a simple yet powerful platform.
+                        </p>
 
-        {{-- Mobile Button --}}
-        <a href="{{ route('login') }}"
-            class="mt-10 inline-flex h-10 min-w-28
-            items-center justify-center rounded-full
-            bg-accent px-5 text-[0.65rem] font-medium text-white
-            transition-colors hover:bg-accent-hover
-            lg:hidden">
+                        <a href="{{ route('login') }}"
+                            class="mt-10 inline-flex h-10 min-w-28
+                            items-center justify-center rounded-full
+                            bg-accent px-5 text-[0.65rem] font-medium text-white
+                            transition-colors hover:bg-accent-hover
+                            lg:hidden">
 
-            Get Started
-        </a>
+                            Get Started
+                        </a>
 
-        {{-- Desktop Button --}}
-        <a href="{{ route('login') }}"
-            class="hidden h-14 min-w-40 items-center justify-center
-            rounded-full bg-accent px-8 text-sm font-medium text-white
-            transition-colors hover:bg-accent-hover
-            lg:inline-flex
-            sm:text-base">
+                        <a href="{{ route('login') }}"
+                            class="hidden h-14 min-w-40 items-center justify-center
+                            rounded-full bg-accent px-8 text-sm font-medium text-white
+                            transition-colors hover:bg-accent-hover
+                            lg:inline-flex
+                            sm:text-base">
 
-            Get Started
-        </a>
-    </div>
+                            Get Started
+                        </a>
+                    </div>
 
-    {{-- Illustration --}}
-    <div
-        class="relative z-10 mt-0 flex w-full min-h-0
-        items-center justify-end
-        lg:mt-0 lg:justify-center">
+                    <div
+                        class="relative z-10 mt-0 flex w-full min-h-0
+                        items-center justify-end
+                        lg:mt-0 lg:justify-center">
 
-        <img src="/images/landing/landing.png"
-            alt="BudGetIn financial illustration"
-            class="w-[78%] max-w-[320px] object-contain
-            sm:max-h-[42vh] sm:w-full sm:max-w-[520px]
-            lg:max-h-[64vh] lg:max-w-[720px]
-            xl:max-h-[68vh] xl:max-w-[800px]
-            2xl:max-w-[860px]">
-    </div>
-</div>
+                        <img src="/images/landing/landing.png" alt="BudGetIn financial illustration"
+                            class="w-[78%] max-w-[320px] object-contain
+                            sm:max-h-[42vh] sm:w-full sm:max-w-[520px]
+                            lg:max-h-[64vh] lg:max-w-[720px]
+                            xl:max-h-[68vh] xl:max-w-[800px]
+                            2xl:max-w-[860px]">
+                    </div>
+                </div>
             </div>
 
-            {{-- Bottom Curve: tidak diubah --}}
-            <div class="absolute pointer-events-none absolute inset-x-0 -bottom-1 z-20
+            <div
+                class="absolute pointer-events-none absolute inset-x-0 -bottom-1 z-20
                 h-16 overflow-hidden lg:hidden">
 
                 <div
@@ -126,52 +116,48 @@
         </section>
         <section
             class="flex h-auto flex-col items-center gap-10
-        bg-[#E4E7EC] px-4 pb-20 pt-6
-        sm:px-10
-        lg:gap-14 lg:px-16
-        dark:bg-[#0B1E36]">
+            bg-[#E4E7EC] px-4 pb-20 pt-6
+            sm:px-10
+            lg:gap-14 lg:px-16
+            dark:bg-[#0B1E36]">
 
-            {{-- Heading --}}
             <div class="-mt-7 flex w-full max-w-4xl flex-col gap-3 sm:gap-5">
                 <h2
                     class="text-center text-xl font-medium text-gray-800
-                sm:text-3xl
-                dark:text-white/90">
+                    sm:text-3xl
+                    dark:text-white/90">
                     Struggling to manage your money and stay in control of your expenses?
                 </h2>
 
                 <p
                     class="text-center text-sm font-light text-gray-500
-                sm:text-xl
-                dark:text-gray-300">
+                    sm:text-xl
+                    dark:text-gray-300">
                     Many people face the same challenges when managing their finances.
                 </p>
             </div>
 
-            {{-- Cards --}}
             <div
                 class="grid w-full max-w-[1320px] grid-cols-2 gap-3
-            sm:gap-6
-            xl:grid-cols-4 xl:gap-10">
+                sm:gap-6
+                xl:grid-cols-4 xl:gap-10">
 
-                {{-- Card 1 --}}
                 <div
                     class="group h-56 w-full rounded-2xl border border-gray-200
-                bg-white/90 p-4 transition hover:bg-main
-                sm:h-75 sm:rounded-3xl sm:px-10 sm:py-12
-                dark:border-white/10 dark:bg-dark
-                dark:hover:bg-dark-hover">
+                    bg-white/90 p-4 transition hover:bg-main
+                    sm:h-75 sm:rounded-3xl sm:px-10 sm:py-12
+                    dark:border-white/10 dark:bg-dark
+                    dark:hover:bg-dark-hover">
 
                     <div class="flex h-full flex-col">
 
-                        {{-- Icon --}}
                         <div
                             class="flex size-9 shrink-0 items-center justify-center
-                        rounded-full bg-purple-600/10 transition
-                        group-hover:bg-third
-                        sm:size-12
-                        dark:bg-purple-500/30
-                        dark:group-hover:bg-third">
+                            rounded-full bg-purple-600/10 transition
+                            group-hover:bg-third
+                            sm:size-12
+                            dark:bg-purple-500/30
+                            dark:group-hover:bg-third">
 
                             <svg class="size-5 sm:size-[30px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 
@@ -181,8 +167,8 @@
 
                                     <path fill="#8A38F5"
                                         class="transition group-hover:fill-white/90
-                                    dark:fill-[#a769f7]
-                                    dark:group-hover:fill-white/90"
+                                        dark:fill-[#a769f7]
+                                        dark:group-hover:fill-white/90"
                                         d="M18 3a3 3 0 0 1 2.995 2.824L21 6v14a1 1 0 0 1-1.405.914l-.12-.062l-2.725-1.678l-2.726 1.678a1 1 0 0 1-.938.058l-.11-.058l-2.726-1.678l-2.726 1.678a1 1 0 0 1-1.517-.732L6 20v-6H4a1 1 0 0 1-.993-.883L3 13V5.5a2.5 2.5 0 0 1 2.336-2.495L5.5 3zm-3 9h-4a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2M5.5 5a.5.5 0 0 0-.5.5V12h1V5.5a.5.5 0 0 0-.5-.5M16 8h-5a1 1 0 0 0-.117 1.993L11 10h5a1 1 0 0 0 .117-1.993z" />
                                 </g>
                             </svg>
@@ -190,42 +176,41 @@
 
                         <h3
                             class="mt-4 text-base font-semibold leading-tight
-                        text-gray-800 transition
-                        group-hover:text-white/90
-                        sm:mt-6 sm:text-2xl
-                        dark:text-white/90">
+                            text-gray-800 transition
+                            group-hover:text-white/90
+                            sm:mt-6 sm:text-2xl
+                            dark:text-white/90">
                             Losing Track of Expenses
                         </h3>
 
                         <p
                             class="mt-auto text-xs font-light leading-tight
-                        text-gray-700 transition
-                        group-hover:text-gray-100
-                        sm:text-base
-                        dark:text-gray-300">
+                            text-gray-700 transition
+                            group-hover:text-gray-100
+                            sm:text-base
+                            dark:text-gray-300">
                             You don't always know where your money goes every day.
                         </p>
                     </div>
                 </div>
 
-                {{-- Card 2 --}}
                 <div
                     class="group h-56 w-full rounded-2xl border border-gray-200
-                bg-white/90 p-4 transition hover:bg-main
-                sm:h-75 sm:rounded-3xl sm:px-10 sm:py-12
-                dark:border-white/10 dark:bg-dark
-                dark:hover:bg-dark-hover">
+                    bg-white/90 p-4 transition hover:bg-main
+                    sm:h-75 sm:rounded-3xl sm:px-10 sm:py-12
+                    dark:border-white/10 dark:bg-dark
+                    dark:hover:bg-dark-hover">
 
                     <div class="flex h-full flex-col">
 
                         {{-- Icon --}}
                         <div
                             class="flex size-9 shrink-0 items-center justify-center
-                        rounded-full bg-green-600/10 transition
-                        group-hover:bg-third
-                        sm:size-12
-                        dark:bg-green-500/30
-                        dark:group-hover:bg-third">
+                            rounded-full bg-green-600/10 transition
+                            group-hover:bg-third
+                            sm:size-12
+                            dark:bg-green-500/30
+                            dark:group-hover:bg-third">
 
                             <svg class="size-5 sm:size-[30px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 
@@ -239,25 +224,24 @@
 
                         <h3
                             class="mt-4 text-base font-semibold leading-tight
-                        text-gray-800 transition
-                        group-hover:text-white/90
-                        sm:mt-6 sm:text-2xl
-                        dark:text-white/90">
+                            text-gray-800 transition
+                            group-hover:text-white/90
+                            sm:mt-6 sm:text-2xl
+                            dark:text-white/90">
                             Overspending
                         </h3>
 
                         <p
                             class="mt-auto text-xs font-light leading-tight
-                        text-gray-700 transition
-                        group-hover:text-gray-100
-                        sm:text-base
-                        dark:text-gray-300">
+                            text-gray-700 transition
+                            group-hover:text-gray-100
+                            sm:text-base
+                            dark:text-gray-300">
                             It's easy to go over budget without realizing it.
                         </p>
                     </div>
                 </div>
 
-                {{-- Card 3 --}}
                 <div
                     class="group h-56 w-full rounded-2xl border border-gray-200
                 bg-white p-4 transition hover:bg-main
@@ -267,7 +251,6 @@
 
                     <div class="flex h-full flex-col">
 
-                        {{-- Icon --}}
                         <div
                             class="flex size-9 shrink-0 items-center justify-center
                         rounded-full bg-red-500/10 transition
@@ -313,7 +296,6 @@
                     </div>
                 </div>
 
-                {{-- Card 4 --}}
                 <div
                     class="group h-56 w-full rounded-2xl border border-gray-200
                 bg-white/90 p-4 transition hover:bg-main
@@ -323,7 +305,6 @@
 
                     <div class="flex h-full flex-col">
 
-                        {{-- Icon --}}
                         <div
                             class="flex size-9 shrink-0 items-center justify-center
                         rounded-full bg-blue-600/10 transition
@@ -365,30 +346,31 @@
         </section>
         <section
             class="relative flex w-full items-center overflow-hidden
-        border border-gray-200 bg-main
-        px-5 py-6
-        sm:px-8 sm:py-8
-        lg:px-12 lg:py-10
-        xl:px-20
-        dark:border-white/10 dark:bg-[#071A2F]">
+            border border-gray-200 bg-main
+            px-5 py-6
+            sm:px-8 sm:py-8
+            lg:px-12 lg:py-10
+            xl:px-20
+            dark:border-white/10 dark:bg-[#071A2F]">
 
             <div
                 class="relative mx-auto grid w-full max-w-[1500px]
-            grid-cols-1 overflow-hidden rounded-3xl
-            border border-gray-200 bg-fourth
-            px-5 py-7
-            sm:px-8 sm:py-8
-            lg:min-h-[610px]
-            lg:grid-cols-[56%_44%]
-            lg:px-10 lg:py-9
-            xl:min-h-[630px]
-            xl:px-12
-            dark:border-white/10 dark:bg-dark">
+                grid-cols-1 overflow-hidden rounded-3xl
 
-                {{-- Left Content --}}
+                lg:max-w-[1280px]
+
+                border border-gray-200 bg-fourth
+                px-5 py-7
+                sm:px-8 sm:py-8
+                lg:min-h-[610px]
+                lg:grid-cols-[56%_44%]
+                lg:px-10 lg:py-9
+                xl:min-h-[630px]
+                xl:px-12
+                dark:border-white/10 dark:bg-dark">
+
                 <div class="relative z-30 flex min-w-0 flex-col">
 
-                    {{-- Main Heading --}}
                     <div class="max-w-[720px]">
                         <h2
                             class="text-xl font-semibold leading-[1.12]
@@ -404,11 +386,11 @@
 
                         <p
                             class="mt-4 max-w-[530px] text-justify
-                        text-xs font-light leading-relaxed
-                        text-gray-700
-                        sm:text-[0.9rem]
-                        lg:text-[0.95rem]
-                        dark:text-gray-300">
+                            text-xs font-light leading-relaxed
+                            text-gray-700
+                            sm:text-[0.9rem]
+                            lg:text-[0.95rem]
+                            dark:text-gray-300">
 
                             BudGetIn simplifies how you manage your money. Track expenses,
                             understand your spending, and stay organized all in one
@@ -417,13 +399,11 @@
                         </p>
                     </div>
 
-                    {{-- Features --}}
                     <div
                         class="mt-7 flex flex-col gap-5
                     sm:mt-8 sm:gap-6
                     lg:mt-9 lg:gap-7">
 
-                        {{-- Feature 1 --}}
                         <div class="flex items-start gap-3 sm:gap-4">
                             <div
                                 class="flex size-8 shrink-0 items-center justify-center
@@ -467,7 +447,6 @@
                             </div>
                         </div>
 
-                        {{-- Feature 2 --}}
                         <div class="flex items-start gap-3 sm:gap-4">
                             <div
                                 class="flex size-8 shrink-0 items-center justify-center
@@ -506,7 +485,6 @@
                             </div>
                         </div>
 
-                        {{-- Feature 3 --}}
                         <div class="flex items-start gap-3 sm:gap-4">
                             <div
                                 class="flex size-8 shrink-0 items-center justify-center
@@ -548,36 +526,35 @@
                     </div>
                 </div>
 
-                {{-- Right Illustration --}}
                 <div
                     class="relative mt-0 flex min-h-[290px]
-                items-end justify-center overflow-hidden
-                sm:min-h-[380px]
-                lg:mt-0 lg:min-h-[520px]">
-
-                    {{-- Background Circle Left --}}
+                    items-end justify-center overflow-hidden
+                    max-lg:overflow-visible
+                    sm:min-h-[380px]
+                    lg:mt-0 lg:min-h-[520px] lg:overflow-visible">
                     <div
                         class="absolute left-[22%] top-[10%]
-        size-[115px] rounded-full
-        bg-pink-300/30
-        sm:size-[170px]
-        lg:left-[8%] lg:top-[6%] lg:size-[220px]
-        xl:size-[240px]
-        dark:bg-pink-400/10">
-                    </div>
+                        size-[115px] rounded-full
+                        bg-pink-300/30
+                        sm:size-[170px]
 
-                    {{-- Background Circle Right --}}
+                        lg:left-8 lg:top-[6%] lg:size-[220px]
+                        xl:left-10 xl:size-[240px]
+
+                        dark:bg-pink-400/10">
+                    </div>
                     <div
                         class="absolute right-[22%] top-[10%]
-        size-[115px] rounded-full
-        bg-amber-200/30
-        sm:size-[170px]
-        lg:right-[8%] lg:top-[6%] lg:size-[220px]
-        xl:size-[240px]
-        dark:bg-amber-400/10">
+                        size-[115px] rounded-full
+                        bg-amber-200/30
+                        sm:size-[170px]
+
+                        lg:right-8 lg:top-[6%] lg:size-[220px]
+                        xl:right-10 xl:size-[240px]
+
+                        dark:bg-amber-400/10">
                     </div>
 
-                    {{-- Female --}}
                     <img src="/images/landing/female.png" alt="Female"
                         class="relative z-10
                     max-h-[255px] w-auto max-w-[82%]
@@ -586,23 +563,28 @@
                     lg:max-h-[485px] lg:max-w-full
                     xl:max-h-[510px]">
 
-                    {{-- Weekly Report --}}
-                    <img src="/images/landing/weekly-report.png" alt="Weekly Report"
-                        class="absolute right-1 top-[39%] z-20
-                    w-[78px] rounded-md
-                    shadow-[4px_4px_8px_rgba(0,0,0,0.25)]
-                    sm:right-4 sm:w-[110px]
-                    lg:right-[-12px] lg:top-[39%] lg:w-[145px]
-                    xl:right-[-20px] xl:w-[145px]">
 
-                    {{-- Budgets --}}
+                    <img src="/images/landing/weekly-report.png" alt="Weekly Report"
+                        class="absolute right-6 top-[39%] z-20
+                        w-[78px] rounded-md
+                        shadow-[2px_2px_5px_rgba(0,0,0,0.18)]
+                        sm:right-8 sm:w-[110px]
+
+                        lg:right-4 lg:top-[39%] lg:w-[135px]
+                        lg:shadow-[4px_4px_8px_rgba(0,0,0,0.25)]
+                        xl:right-3 xl:w-[145px]">
+
                     <img src="/images/landing/budgets.png" alt="Budgets"
-                        class="absolute bottom-0 left-1 z-20
-                    w-[170px] rounded-md
-                    shadow-[4px_4px_8px_rgba(0,0,0,0.25)]
-                    sm:left-5 sm:w-[240px]
-                    lg:bottom-[-5px] lg:left-[-80px] lg:w-[350px]
-                    xl:left-[-50px] xl:w-[340px]">
+                        class="absolute bottom-[-8px] left-7 z-20
+                        w-[170px] rounded-md
+                        shadow-[2px_3px_5px_rgba(0,0,0,0.18)]
+
+                        sm:bottom-[-8px] sm:left-5 sm:w-[240px]
+
+                        lg:bottom-[-5px] lg:left-[-20px] lg:w-[320px]
+                        lg:shadow-[4px_4px_8px_rgba(0,0,0,0.25)]
+
+                        xl:bottom-[-5px] xl:left-[-15px] xl:w-[340px]">
                 </div>
             </div>
         </section>
@@ -611,12 +593,10 @@
         gap-5 px-5 py-12
         sm:gap-10 sm:px-6 sm:py-28">
 
-            {{-- Logo --}}
             <a href="/">
                 <img src="/images/logo/logo.png" alt="Logo" class="w-36 sm:w-60">
             </a>
 
-            {{-- Description --}}
             <p
                 class="w-full max-w-[310px] text-center
             text-xs font-light leading-relaxed
@@ -629,10 +609,8 @@
                 financial decisions every day.
             </p>
 
-            {{-- Social Media --}}
             <div class="flex gap-2 sm:gap-3">
 
-                {{-- Facebook --}}
                 <a href="#" aria-label="Facebook" class="inline-flex items-center justify-center">
 
                     <svg class="size-9 sm:size-[45px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 55"
@@ -646,8 +624,6 @@
                             fill="black" class="dark:fill-gray-300" />
                     </svg>
                 </a>
-
-                {{-- LinkedIn --}}
                 <a href="#" aria-label="LinkedIn" class="inline-flex items-center justify-center">
 
                     <svg class="size-9 sm:size-[45px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 55"
@@ -669,8 +645,6 @@
                             fill="black" class="dark:fill-gray-300" />
                     </svg>
                 </a>
-
-                {{-- Instagram --}}
                 <a href="#" aria-label="Instagram" class="inline-flex items-center justify-center">
 
                     <svg class="size-9 sm:size-[45px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 55"
@@ -686,7 +660,6 @@
                 </a>
             </div>
 
-            {{-- Copyright --}}
             <p
                 class="text-center text-[0.65rem] font-light
             text-gray-400
@@ -696,7 +669,6 @@
                 © 2026 BudGetIn. Built for smarter financial management.
             </p>
         </footer>
-        {{-- Toggler --}}
         <div class="fixed right-6 bottom-6 z-50">
             <button
                 class="bg-main-hover hover:bg-main inline-flex size-14 items-center justify-center rounded-full text-white transition-colors"
